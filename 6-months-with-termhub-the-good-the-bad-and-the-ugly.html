@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>6 Months With TermHub: The Good, The Bad, and The Ugly</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="6-months-with-termhub-the-good-the-bad-and-the-ugly">6 Months With TermHub: The Good, The Bad, and The Ugly</h1>
+
+<h2 id="an-honest-deep-dive-from-someone-whos-actually-lived-inside-this-platform">An honest deep-dive from someone who's actually lived inside this platform</h2>
+
+<hr />
+
+<p>I almost canceled my subscription on day 47.</p>
+
+<p>Not because TermHub was terrible — it wasn't. I canceled because I'd exported a 2,400-term glossary for a pharmaceutical client, sent it to their internal review team, and watched it come back looking like someone had put a perfectly organized spreadsheet through a blender. Formatting chaos. Broken hierarchies. Missing context fields. The kind of thing that makes you fire off a passive-aggressive Slack message to no one in particular.</p>
+
+<p>I didn't cancel. I figured out what went wrong (more on that later), rebuilt the workflow, and kept going. Now, six months in, I'm using TermHub daily across four active client accounts — and I have opinions. Loud ones.</p>
+
+<p>This review is for translators, terminologists, localization project managers, and anyone who manages controlled vocabulary at scale and is seriously asking whether TermHub is worth the subscription fee in 2026. I'll give you the direct answer: <strong>sometimes yes, sometimes no, and the difference matters enormously depending on your situation.</strong></p>
+
+<p>Let's get into it.</p>
+
+<hr />
+
+<h2 id="what-termhub-claims-to-do">What TermHub Claims to Do</h2>
+
+<p>TermHub positions itself as a cloud-based termbase management platform built for professional translators, language service providers (LSPs), and enterprise localization teams. The pitch is straightforward: centralize your terminology, collaborate in real time, integrate with your CAT tools, and maintain consistency across languages and projects.</p>
+
+<p>It supports TBX import/export (the industry-standard termbase exchange format), offers multi-user access with role-based permissions, and includes a browser-based editor for managing entries without needing desktop software. In theory, it's the modern answer to clunky, locally-installed terminology management tools that still dominate the professional space.</p>
+
+<p>That's the brochure version. Here's what it actually looks like when you use it.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-managing-a-3000-term-legal-glossary-across-6-languages">1. Managing a 3,000-Term Legal Glossary Across 6 Languages</h3>
+
+<p>This is my most demanding use case, and honestly where TermHub earns its keep. I maintain a legal termbase for a corporate compliance client across English, German, French, Spanish, Portuguese, and Japanese. Before TermHub, this lived in a shared Excel file that was updated by whoever had bandwidth, with no version control, no validation, and no consistency checks.</p>
+
+<p>Moving it into TermHub took about three days of cleanup and import work — not trivial, but survivable. The real payoff came six weeks later when I could assign external reviewers (two native speakers per language) access to only their language columns, with edit permissions but no ability to touch source terms. That role-based access alone saved probably four hours of email back-and-forth per review cycle.</p>
+
+<p><strong>Result:</strong> Review cycles dropped from 12 days average to 5. Worth it.</p>
+
+<h3 id="2-real-time-collaboration-with-a-remote-lsp-team">2. Real-Time Collaboration with a Remote LSP Team</h3>
+
+<p>I work with a small LSP team spread across three time zones. We needed a shared termbase that multiple translators could query without constantly downloading updated files. TermHub's sharing model worked here — I created a project, added team members, and everyone could look up terms directly from the platform.</p>
+
+<p>The friction: not every translator on the team used a CAT tool that integrated cleanly with TermHub's API. Two of them ended up doing manual lookups in the browser, which isn't terrible but isn't the seamless workflow promised. The SDL Trados and memoQ integrations work well. Anything outside those two feels like an afterthought.</p>
+
+<p><strong>Result:</strong> Solid improvement over the old workflow, but only if everyone's using supported CAT tools.</p>
+
+<h3 id="3-building-client-deliverable-glossaries-from-scratch">3. Building Client-Deliverable Glossaries from Scratch</h3>
+
+<p>This is where I hit that day-47 wall I mentioned. TermHub's internal structure is powerful, but exporting clean, client-ready glossaries requires more configuration upfront than the documentation makes obvious. You need to set up your export templates <em>before</em> you build your termbase, not after. Learn from my mistake.</p>
+
+<p>Once I'd reworked my template setup, the export-to-PDF and export-to-Excel workflows became genuinely useful. Clients receive well-formatted glossaries with definitions, usage notes, and forbidden terms clearly marked. That actually gets commented on positively in client feedback now.</p>
+
+<p><strong>Result:</strong> Good once you understand the system, but the learning curve is steeper than advertised.</p>
+
+<h3 id="4-terminology-validation-during-cat-tool-review">4. Terminology Validation During CAT Tool Review</h3>
+
+<p>Using TermHub's Trados integration, I ran validation passes on two large translation projects to flag instances where translators had deviated from approved terminology. The validation caught 340 inconsistencies across 85,000 words on one project — some legitimate translator choices, some actual errors. Discussing those findings with the client became a data-driven conversation instead of a subjective one.</p>
+
+<p><strong>Result:</strong> This feature alone justified several months of subscription cost for that project.</p>
+
+<hr />
+
+<h2 id="feature-breakdown-what-works-what-doesnt">Feature Breakdown: What Works, What Doesn't</h2>
+
+<h3 id="what-works">What Works</h3>
+
+<p><strong>Role-based access control</strong> is genuinely well-implemented. Granular permissions mean you can bring clients, reviewers, and translators into the same system without anyone accidentally breaking things they shouldn't touch.</p>
+
+<p><strong>TBX import/export</strong> is reliable when your source file is clean. If you're migrating from MultiTerm or another professional platform with properly structured TBX, you'll have a good time. Migration from a spreadsheet requires cleanup first.</p>
+
+<p><strong>Search and filter functionality</strong> inside the termbase editor is fast and flexible. Searching across multiple fields, filtering by language pair, subject domain, or entry status — all responsive and intuitive.</p>
+
+<p><strong>Version history</strong> on individual entries is underrated. Being able to see that a term was changed, who changed it, and when creates accountability in collaborative environments that clients actually appreciate.</p>
+
+<h3 id="what-doesnt-work-yet">What Doesn't Work (Yet)</h3>
+
+<p><strong>The mobile experience</strong> is essentially non-existent. If you occasionally need to check a term from your phone during a meeting, you'll be doing a lot of pinching and zooming on an interface that wasn't designed for small screens.</p>
+
+<p><strong>Bulk editing</strong> is more limited than it should be. If you need to change the subject domain field across 400 entries simultaneously, you're doing it via workarounds or re-import, not through a clean bulk-edit interface. This is a real gap.</p>
+
+<p><strong>Onboarding documentation</strong> is inconsistent. Some areas of the platform are thoroughly documented; others have help articles that clearly haven't been updated since an earlier version of the interface. This matters more than it should for a professional tool.</p>
+
+<p><strong>CAT tool integration breadth</strong> is limited. Trados and memoQ work. Everything else is manual API work or workarounds. If your team uses Wordfast, Déjà Vu, or other platforms, factor in that friction.</p>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="termhub-vs-sdl-multiterm">TermHub vs. SDL MultiTerm</h3>
+
+<p>MultiTerm is the industry incumbent and still the default choice for enterprise teams already inside the SDL/RWS ecosystem. It's more powerful in raw customization, handles very large termbases more gracefully, and has deeper Trados integration (obviously). But it's desktop-bound, expensive at scale, and genuinely painful to administer for distributed teams. If your team isn't centrally located and you're not paying RWS license fees anyway, MultiTerm's advantages mostly disappear. TermHub's cloud-native collaboration model wins for distributed teams under about 15 people.</p>
+
+<h3 id="termhub-vs-kaleidoscope-quickterm">TermHub vs. Kaleidoscope QuickTerm</h3>
+
+<p>QuickTerm is specifically built for enterprise terminology <em>workflows</em> — workflows with approval chains, governance structures, and compliance requirements. If you're a large organization with formal terminology governance, QuickTerm's workflow engine is more mature. TermHub doesn't have that depth of process management. But QuickTerm's pricing model and implementation complexity make it overkill for freelancers and small LSPs. TermHub is more accessible and gets you 80% of the way there at a fraction of the cost.</p>
+
+<h3 id="termhub-vs-excel-good-discipline">TermHub vs. Excel + Good Discipline</h3>
+
+<p>Don't laugh — this is a real comparison. For a solo freelancer managing one or two small termbases with no external collaboration requirements, a well-structured spreadsheet with naming conventions and version control is genuinely competitive. TermHub only pulls ahead when you introduce collaboration, validation, or integration requirements. Know which situation you're actually in.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>TermHub's pricing tiers in 2026 are structured around user seats and termbase size. The solo tier is reasonable for freelancers who are serious about terminology management — it's in the range where it pays for itself with one prevented terminology inconsistency on a significant project.</p>
+
+<p>The team tier jumps considerably per seat, which makes it a harder sell for LSPs building out larger teams. At 8–10 users, you should run the ROI calculation explicitly: how many hours per month does centralized terminology management save, and what's your team's billable rate? If you can't answer that question with real numbers, you're not ready to justify the team tier.</p>
+
+<p>Enterprise pricing is custom and presumably significant. I have no data there.</p>
+
+<p><strong>Bottom line:</strong> Solo and small team tiers are justifiable. Scale carefully and calculate before committing to larger plans.</p>
+
+<hr />
+
+<h2 id="who-should-use-it-who-should-avoid-it">Who Should Use It / Who Should Avoid It</h2>
+
+<p><strong>Use TermHub if:</strong>
+- You collaborate with external reviewers or clients on terminology
+- You're working across 3+ languages with shared terminology requirements
+- You use Trados or memoQ and want integrated validation
+- You're currently managing termbases in spreadsheets and feeling the pain</p>
+
+<p><strong>Avoid TermHub if:</strong>
+- You're a solo freelancer with simple, stable terminology needs
+- Your CAT tool isn't Trados or memoQ
+- You need robust mobile access
+- You require enterprise-level workflow governance and approval chains</p>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>TermHub is a genuinely useful tool for the right user profile, and it's improved meaningfully over the time I've been using it. It's not perfect — the onboarding friction is real, the integration breadth is limited, and bulk editing needs work. But for distributed teams managing professional termbases across multiple languages and collaborators, it solves problems that spreadsheets and legacy desktop tools genuinely cannot.</p>
+
+<p>If you're a serious freelance terminologist or running a small-to-midsize localization team, <strong>try it for 30 days on a real project, not a demo glossary.</strong> The free trial is enough time to hit both the highlights and the rough edges. You'll know quickly whether it fits your workflow.</p>
+
+<p>I almost canceled on day 47. I'm glad I didn't. But I'd have set up my export templates on day one if I'd known then what I know now.</p>
+
+<hr />
+
+<p><em>Have questions about specific use cases or integrations? Drop them in the comments — happy to go deeper on anything covered here.</em></p>
+
+</body>
+</html>
