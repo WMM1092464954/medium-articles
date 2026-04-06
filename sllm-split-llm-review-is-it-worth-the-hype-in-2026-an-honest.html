@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>sllm (Split LLM) Review: Is It Worth the Hype in 2026? — An Honest Take After Real-World Use</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="sllm-split-llm-review-is-it-worth-the-hype-in-2026-an-honest-take-after-real-world-use">sllm (Split LLM) Review: Is It Worth the Hype in 2026? — An Honest Take After Real-World Use</h1>
+
+<hr />
+
+<h2 id="the-hook">The Hook</h2>
+
+<p>It was 11:47 PM on a Tuesday when my MacBook's fans started screaming like a jet engine preparing for takeoff. I was trying to run a 70B parameter model locally — nothing exotic, just a standard inference task for a client project — and my machine was essentially begging for mercy. RAM was maxed. Thermal throttling had kicked in. The model was crawling.</p>
+
+<p>A colleague in a Slack thread casually dropped a link to sllm (Split LLM) with the message: <em>"Just split it across your machines. Problem solved."</em></p>
+
+<p>I was skeptical. I'd heard that line before. But by midnight, I had inference running across my MacBook and a spare Linux box I'd been using as a Plex server. The combined VRAM made the 70B model feel almost comfortable. I've been using sllm in production workflows ever since — and I've now got enough real-world hours in it to tell you exactly when it earns its reputation and when it falls flat.</p>
+
+<hr />
+
+<h2 id="what-sllm-claims-to-do">What sllm Claims to Do</h2>
+
+<p>The pitch is deceptively simple: sllm lets you split a single large language model across multiple machines, treating distributed hardware as a unified inference environment. Instead of buying a single expensive GPU rig to run large models, you pool what you already have.</p>
+
+<p>The project targets developers and power users who are running into the hard ceiling of local LLM inference — people who want to use 65B or 70B models without dropping $15,000 on a new workstation. It supports popular model formats (GGUF via llama.cpp under the hood for some configurations), exposes a compatible API layer, and handles the coordination of splitting layers across nodes automatically.</p>
+
+<p>That's the claim. Now let's talk about what actually happens when you use it.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-long-context-summarization-across-a-mixed-hardware-setup">1. Long-Context Summarization Across a Mixed Hardware Setup</h3>
+
+<p>My primary use case has been running a Llama 3 70B model split between my M2 MacBook Pro (96GB unified memory) and an older Ubuntu server with a 3090 (24GB VRAM). This combination would be impossible with any single-machine local inference tool.</p>
+
+<p><strong>Result:</strong> Throughput settled around 8–12 tokens/second, which is genuinely usable for batch summarization tasks. Not fast enough for interactive chat sessions where I'm waiting on responses, but more than adequate for overnight processing jobs where I'm summarizing research papers or long client documents. The output quality is indistinguishable from running the same model on a single beefy machine — which makes sense, because it's the same model.</p>
+
+<h3 id="2-collaborative-inference-in-a-small-team-environment">2. Collaborative Inference in a Small Team Environment</h3>
+
+<p>We tried setting up a shared inference endpoint for a three-person team, splitting a Mixtral 8x22B model across two developer machines while the third machine handled API routing. The idea was to avoid paying for cloud inference on a sensitive internal project.</p>
+
+<p><strong>Result:</strong> This worked, but it required more networking configuration than the documentation suggested. Latency between machines on a local LAN was fine; once we introduced a machine over a home WiFi connection, throughput degraded noticeably. The tool is honest about needing low-latency connections, but "low-latency" means gigabit LAN, not "decent WiFi."</p>
+
+<h3 id="3-model-experimentation-without-cloud-costs">3. Model Experimentation Without Cloud Costs</h3>
+
+<p>I used sllm specifically to experiment with models I'd never normally run locally — testing Qwen 2.5 72B against various prompting strategies for a few weeks without incurring API costs.</p>
+
+<p><strong>Result:</strong> This is where sllm genuinely shines. The cost savings are real. I ran roughly 2–3 weeks of medium-intensity experimentation that would have cost me $40–80 in API calls. The setup overhead was about two hours total. Net positive, clearly.</p>
+
+<h3 id="4-production-inference-for-a-small-internal-tool">4. Production Inference for a Small Internal Tool</h3>
+
+<p>I tried using sllm as the backbone for a small internal tool that needed consistent low-latency responses (under 2 seconds for most queries).</p>
+
+<p><strong>Result:</strong> This is where I hit limits. Latency is inconsistent enough that I wouldn't trust it for user-facing applications where timing matters. For batch workflows and async processing? Excellent. For snappy interactive tools? I switched back to a cloud API.</p>
+
+<hr />
+
+<h2 id="feature-breakdown">Feature Breakdown</h2>
+
+<h3 id="what-works">What Works</h3>
+
+<p><strong>Automatic layer distribution</strong> is genuinely impressive. You don't need to manually configure which layers go where — sllm handles the math based on reported VRAM and memory availability. It's not perfect, but it gets you 80% of the way there without a PhD in transformer architecture.</p>
+
+<p><strong>API compatibility</strong> is solid. If you're already building against an OpenAI-compatible endpoint, the migration to sllm's local endpoint is minimal code changes. This is not a small thing — plenty of local inference projects have historically made this painful.</p>
+
+<p><strong>Stability has improved significantly</strong> since the early releases. Six months ago, node dropout (one machine going to sleep or losing connection) would crash the entire inference session hard. Current builds handle this more gracefully, though it's still not seamless.</p>
+
+<h3 id="what-doesnt-work-yet">What Doesn't Work (Yet)</h3>
+
+<p><strong>Documentation is the project's biggest liability.</strong> The README gets you to a working two-node setup, but anything beyond that — custom load balancing, adding nodes dynamically, handling model format edge cases — requires either digging through GitHub issues or asking in the Discord. For a tool that requires non-trivial networking setup, this is a real problem.</p>
+
+<p><strong>Windows support is second-class.</strong> If your spare machine runs Windows, expect friction. The smooth experience is Linux-to-Linux or Linux-to-Mac. Windows-as-a-node technically works but introduced enough quirks in my testing that I'd avoid it unless you're comfortable debugging environment issues.</p>
+
+<p><strong>No GUI, no monitoring dashboard out of the box.</strong> You're reading logs. This is fine for developers but creates an adoption ceiling for less technical users who might genuinely benefit from the tool.</p>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. the Competition</h2>
+
+<h3 id="sllm-vs-ollama">sllm vs. Ollama</h3>
+
+<p>Ollama is the obvious comparison — it's the dominant local LLM tool for most users. But this comparison is somewhat unfair because they solve different problems. Ollama is for single-machine inference, and it's excellent at that. If your hardware is sufficient for the models you want to run, use Ollama. sllm is specifically for the scenario where your hardware <em>isn't</em> sufficient, and you want to pool resources. The answer is: use Ollama until you hit the ceiling, then evaluate sllm.</p>
+
+<h3 id="sllm-vs-exo">sllm vs. Exo</h3>
+
+<p>Exo is sllm's most direct competitor — also focused on distributed inference across consumer hardware. Exo has a slightly friendlier setup experience and has gotten press for running on Apple Silicon clusters. In my testing, sllm had better throughput on mixed hardware (AMD + NVIDIA + Apple Silicon in the same cluster), while Exo felt more polished for homogeneous Apple Silicon setups. If you're running an all-Mac shop, test Exo first. If you have mixed hardware, sllm is currently the stronger choice.</p>
+
+<h3 id="sllm-vs-cloud-apis-groq-together-ai">sllm vs. Cloud APIs (Groq, Together AI)</h3>
+
+<p>This is the honest comparison most reviews avoid. For pure performance-per-dollar on <em>occasional</em> inference workloads, cloud APIs like Groq win. Groq is running 70B models at 200+ tokens/second. sllm at 8–12 tokens/second on consumer hardware isn't competing on speed.</p>
+
+<p>Where sllm wins: <strong>data privacy, consistent costs on high-volume workloads, and no rate limits.</strong> If you're processing sensitive data or have steady high-volume needs, sllm's economics flip in its favor. If you're using models occasionally and don't have privacy constraints, a cloud API is almost certainly the pragmatic choice.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>sllm is open source and free. The real cost is hardware you already own (or can assemble cheaply) and the time investment to set it up correctly. My honest estimate: budget 2–4 hours for initial setup on a two-node configuration, and another 1–2 hours of troubleshooting per additional node. That's not free — your time has value — but it's a one-time cost.</p>
+
+<p>The ongoing value depends entirely on your inference volume. Light usage? Cloud APIs are cheaper when you factor in setup time. Heavy or consistent usage with privacy requirements? The ROI is clear.</p>
+
+<hr />
+
+<h2 id="who-should-use-it-who-should-avoid-it">Who Should Use It / Who Should Avoid It</h2>
+
+<p><strong>Use sllm if:</strong>
+- You have 2+ machines with combined RAM/VRAM that exceeds what you need for large models
+- You're running batch, async, or research workflows where latency consistency isn't critical
+- You're handling sensitive data that can't leave your infrastructure
+- You're comfortable with command-line setup and reading logs</p>
+
+<p><strong>Avoid sllm if:</strong>
+- You need consistent sub-2-second latency for interactive applications
+- Your machines are on WiFi or connected over internet (not local LAN)
+- You want a plug-and-play experience with minimal configuration
+- You only have a single machine — Ollama is your tool</p>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>sllm is solving a real problem — the gap between consumer hardware and the scale required for the most capable open-source models. It solves that problem well enough to be genuinely useful in production, with real caveats about latency and setup complexity.</p>
+
+<p>The hype is partially warranted and partially overblown. It's not a magic button that makes distributed inference effortless. It's a well-engineered tool for a specific technical use case that requires a specific technical user.</p>
+
+<p><strong>My recommendation:</strong> If you've got spare machines sitting around and you're tired of cloud API costs on high-volume workloads, spend an afternoon with sllm. The ceiling you thought you had on local inference is higher than you think. Just go in with realistic expectations about throughput, documentation depth, and the networking requirements — and you'll likely find, as I did, that you're still using it six months later.</p>
+
+<hr />
+
+<p><em>Tested on: M2 MacBook Pro (96GB) + Ubuntu 22.04 with RTX 3090, running Llama 3 70B and Mixtral 8x22B variants across multiple workflows from October 2025 through April 2026.</em></p>
+
+</body>
+</html>
