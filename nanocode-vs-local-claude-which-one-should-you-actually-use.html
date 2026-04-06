@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nanocode vs Local Claude: Which One Should You Actually Use?</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="nanocode-vs-local-claude-which-one-should-you-actually-use">Nanocode vs Local Claude: Which One Should You Actually Use?</h1>
+
+<hr />
+
+<p>There's a specific kind of frustration that only developers know: you're mid-flow on a complex refactoring task, you paste your context into a chat window, and the model either hallucinates a function that doesn't exist, loses track of your file structure halfway through, or — my personal favorite — confidently rewrites working code into something subtly broken.</p>
+
+<p>That's the moment I started seriously comparing Nanocode against running Claude locally via Ollama and similar setups. I'd been using both for several months across real production work, not toy projects. This isn't a benchmark post. It's a working developer's honest account of what actually matters when you're choosing between these two approaches.</p>
+
+<p>Let me be direct about what this article is and isn't: it's not a sponsored take, it's not a "both are great in different ways!" cop-out, and it's not going to bury the conclusion in qualifications. By the end, you'll know which one I use daily and why.</p>
+
+<hr />
+
+<h2 id="what-nanocode-claims-to-do">What Nanocode Claims to Do</h2>
+
+<p>Nanocode positions itself as an AI-native coding environment — not just a plugin on top of your existing editor, but a purpose-built workspace where the model is a first-class participant in the development loop. The pitch is tight context management, repository-level understanding, and a workflow designed around iterative, multi-file editing rather than single-prompt completions.</p>
+
+<p>Local Claude — meaning running Claude-compatible models through local inference setups like Ollama, LM Studio, or llama.cpp — makes a different kind of promise: privacy, no API costs, full control, and the ability to run offline. The models you'd typically run this way are distilled or quantized versions, not the full frontier models.</p>
+
+<p>These aren't the same product. That's actually the most important thing to understand before we go further.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-multi-file-refactoring-on-a-mid-sized-codebase">1. Multi-file refactoring on a mid-sized codebase</h3>
+
+<p>My primary test was a real task: migrating a Node.js service from CommonJS to ESM across approximately 40 files, with a mix of internal utilities, route handlers, and some legacy third-party integrations that needed careful wrapping.</p>
+
+<p>With Nanocode, I loaded the repository directly. The context management here is genuinely good — it doesn't just dump everything into the prompt window, it builds a working graph of dependencies and surfaces relevant files as I describe changes. The refactor took about three hours of actual work, with Nanocode handling probably 70% of the mechanical transformation correctly on first pass.</p>
+
+<p>With local Claude (running a quantized 70B model via LM Studio), I had to manually paste file contents, maintain my own context across sessions, and re-anchor the model repeatedly when it lost track of which import patterns we'd already standardized. The same task took closer to six hours, with noticeably more manual correction.</p>
+
+<p>Winner here: Nanocode, clearly.</p>
+
+<h3 id="2-quick-syntax-questions-and-one-off-script-generation">2. Quick syntax questions and one-off script generation</h3>
+
+<p>This is where the comparison flips. When I need to remember the exact syntax for a Rust lifetime annotation, generate a quick Python script to parse a CSV, or look up how a specific library method behaves — local Claude is faster. There's no round-trip latency, no rate limiting, and the models are genuinely good enough for this category of task.</p>
+
+<p>I have a hotkey that opens a local inference window in under two seconds. For these micro-tasks, that speed compounds significantly across a workday.</p>
+
+<p>Winner: Local Claude, and it's not close.</p>
+
+<h3 id="3-debugging-with-full-error-context">3. Debugging with full error context</h3>
+
+<p>I tested both on a particularly gnarly async race condition — the kind where the stack trace points to a symptom, not the cause, and you need the model to reason about timing and state across multiple modules.</p>
+
+<p>Nanocode's repository awareness paid off here. When I described the error and pointed it at the relevant modules, it correctly identified that the issue was upstream — a shared cache object being mutated without proper locking — and suggested a fix that actually worked. It had context I didn't have to re-explain.</p>
+
+<p>Local Claude, without that repository graph, gave me a reasonable generic answer about async patterns that was technically accurate but missed the specific cause. It would have gotten there eventually with more prompting, but the time cost was real.</p>
+
+<p>Winner: Nanocode for complex, context-dependent debugging.</p>
+
+<h3 id="4-working-offline-or-in-restricted-environments">4. Working offline or in restricted environments</h3>
+
+<p>I do a portion of my work on a client site with strict network policies. Local Claude runs on my laptop. Nanocode doesn't. Full stop.</p>
+
+<p>Winner: Local Claude, by default.</p>
+
+<hr />
+
+<h2 id="feature-breakdown">Feature Breakdown</h2>
+
+<p><strong>What Nanocode does well:</strong></p>
+
+<ul>
+<li><strong>Repository indexing</strong> is the real differentiator. It's not perfect — it sometimes surfaces irrelevant files in large monorepos — but it's substantially better than manually managing context.</li>
+<li><strong>Inline diff previews</strong> before applying changes are excellent. You can see exactly what's about to happen and reject individual hunks.</li>
+<li><strong>Session continuity</strong> across a multi-hour work session is meaningfully better than any chat-window approach.</li>
+</ul>
+
+<p><strong>What Nanocode gets wrong:</strong></p>
+
+<ul>
+<li><strong>Performance on smaller tasks</strong> is overkill and slow. You're spinning up context machinery for something that should take three seconds.</li>
+<li><strong>The interface</strong> occasionally feels like it was designed for demos rather than daily use. Some flows require too many confirmation clicks.</li>
+<li><strong>Model opacity</strong>: you don't always know which model is running under the hood, which matters when you're trying to reproduce results or understand a failure mode.</li>
+</ul>
+
+<p><strong>What local Claude does well:</strong></p>
+
+<ul>
+<li><strong>Speed for simple queries</strong> — genuinely fast when running on capable hardware.</li>
+<li><strong>Privacy and cost</strong> — no API bills, no data leaving your machine.</li>
+<li><strong>Customization</strong> — you can swap models, adjust parameters, and build custom tooling around local inference in ways that Nanocode doesn't permit.</li>
+</ul>
+
+<p><strong>What local Claude gets wrong:</strong></p>
+
+<ul>
+<li><strong>Context length on quantized models</strong> is a real limitation. The 70B quantized models I run typically handle 32K context comfortably, but start degrading on longer sessions.</li>
+<li><strong>Quality ceiling</strong> — there's no way around it: the models you can run locally today are not as capable as frontier models. For hard problems, the gap matters.</li>
+</ul>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="nanocode-vs-cursor">Nanocode vs. Cursor</h3>
+
+<p>Cursor is the more mature product with a larger ecosystem. If you're already using VS Code and want repository-aware AI, Cursor is a safer bet for most teams — better plugin compatibility, more predictable behavior, and a more established community. Nanocode has some interesting UX ideas that Cursor hasn't adopted, but "interesting" doesn't always mean "better in production."</p>
+
+<h3 id="local-claude-vs-local-llamamistral-models">Local Claude vs. Local Llama/Mistral models</h3>
+
+<p>Running Claude-compatible models locally isn't the same as running Claude. The open-weight models available for local inference are often fine-tuned derivatives or instruction-tuned variants with different behavior profiles. For coding specifically, models like DeepSeek Coder and Qwen-based variants often outperform generic instruction-tuned models at similar parameter counts. If you're going the local route, benchmark for your specific use case rather than defaulting to whatever is most popular.</p>
+
+<h3 id="nanocode-vs-api-direct-claude">Nanocode vs. API-direct Claude</h3>
+
+<p>If you're comfortable writing your own tooling, calling Claude's API directly with a well-crafted system prompt and your own context management can match or beat Nanocode for many use cases — at lower cost. Nanocode's value proposition is that it handles that infrastructure for you. If you can build it yourself in a weekend and prefer control, skip Nanocode.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>Nanocode's pricing sits in the mid-tier developer tool range — comparable to Cursor Pro. For an individual developer doing serious multi-file work daily, the productivity gains are likely worth it. For occasional use or primarily single-file tasks, you're paying for infrastructure you won't fully utilize.</p>
+
+<p>Local Claude has different costs: upfront hardware (a capable GPU setup for 70B models runs into real money), electricity, and your time maintaining the toolchain. If you're already running a capable machine for other reasons, the marginal cost is low. If you'd be buying hardware specifically for this, the economics get complicated quickly.</p>
+
+<hr />
+
+<h2 id="who-should-use-nanocode">Who Should Use Nanocode</h2>
+
+<ul>
+<li>Developers working on multi-file, multi-session projects who don't want to build their own context management</li>
+<li>Teams where onboarding time to the AI toolchain matters</li>
+<li>Anyone who's hitting the ceiling on what single-prompt completions can do for complex tasks</li>
+</ul>
+
+<h2 id="who-should-avoid-nanocode">Who Should Avoid Nanocode</h2>
+
+<ul>
+<li>Developers in air-gapped or network-restricted environments</li>
+<li>Anyone whose primary use is quick lookups and script generation</li>
+<li>Developers who prefer full control over the underlying model and parameters</li>
+</ul>
+
+<h2 id="who-should-use-local-claude">Who Should Use Local Claude</h2>
+
+<ul>
+<li>Privacy-first developers handling sensitive codebases</li>
+<li>High-volume users where API costs add up significantly</li>
+<li>Anyone comfortable maintaining local infrastructure for the flexibility it provides</li>
+</ul>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>Here's the honest answer: I use both, but not interchangeably.</p>
+
+<p>Nanocode is my tool for anything requiring real repository awareness — refactoring, cross-file debugging, sessions where context continuity matters. It earns its place for that specific category of work.</p>
+
+<p>Local Claude handles everything else: fast lookups, offline work, one-off scripts, and the dozens of micro-questions that accumulate throughout a workday where spinning up full repository context would be absurd.</p>
+
+<p>If you're trying to pick just one: <strong>if your work is primarily complex, multi-file development on connected machines, Nanocode wins</strong>. If your work is varied, privacy-sensitive, or you're comfortable with the setup overhead, local inference is more flexible and ultimately cheaper.</p>
+
+<p>The frame of "which one should you use" is slightly wrong. The better question is "what kind of work are you doing most?" Answer that honestly, and the choice makes itself.</p>
+
+</body>
+</html>
