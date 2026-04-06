@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>6 Months With Claude HowTo: The Good, The Bad, and The Ugly</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="6-months-with-claude-howto-the-good-the-bad-and-the-ugly">6 Months With Claude HowTo: The Good, The Bad, and The Ugly</h1>
+
+<p><em>A long-time user's honest assessment of whether this tool actually delivers on its promises</em></p>
+
+<hr />
+
+<h2 id="the-hook">The Hook</h2>
+
+<p>Six months ago, I was three hours deep into writing a 47-step onboarding guide for a new SaaS product. I had my notes spread across four browser tabs, a half-finished Notion doc, and a growing sense of dread that I was going to miss my deadline by a country mile.</p>
+
+<p>A colleague dropped a link to Claude HowTo in our Slack channel with a single message: "This just saved my afternoon."</p>
+
+<p>I was skeptical — I'd been burned by AI writing tools before, tools that promised to handle documentation but really just produced corporate word salad I'd have to rewrite from scratch anyway. But I was desperate enough to try anything. Within forty minutes, I had a working first draft that needed editing, not rebuilding.</p>
+
+<p>That's the moment I became a regular user. Now, six months later, I've used it across enough different contexts to give you a review that goes beyond the honeymoon phase.</p>
+
+<hr />
+
+<h2 id="what-claude-howto-claims-to-do">What Claude HowTo Claims to Do</h2>
+
+<p>Claude HowTo is a purpose-built layer on top of Anthropic's Claude model, specifically optimized for procedural and instructional content generation. The core pitch is simple: give it a topic, a context, an audience, and a desired output format, and it produces step-by-step how-to guides, SOPs, tutorials, and explainer documents faster than you could write them manually.</p>
+
+<p>It's not trying to be a general-purpose AI assistant. It's laser-focused on the instructional content niche — technical documentation, internal knowledge bases, user-facing help centers, training materials, and educational how-to content. That specificity is both its biggest strength and, depending on your needs, its most significant limitation.</p>
+
+<p>The tagline is something like "Turn expertise into documentation in minutes." Whether that holds up under sustained real-world pressure is exactly what I want to examine here.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-internal-sops-for-a-small-operations-team">1. Internal SOPs for a Small Operations Team</h3>
+
+<p>My first serious use case was generating Standard Operating Procedures for a 12-person operations team. We had tons of institutional knowledge living in people's heads and almost none of it written down. I ran six discovery sessions with team members, captured rough notes, and fed those notes into Claude HowTo with context about our audience (non-technical ops staff) and the desired format (numbered steps with decision points).</p>
+
+<p><strong>Result:</strong> First drafts that were 70-80% production-ready. The formatting was consistent, the language matched the appropriate reading level, and it correctly identified branching logic scenarios I hadn't explicitly spelled out. I probably saved 15+ hours of documentation work across those six SOPs. The 20-30% that needed rework was mostly domain-specific terminology and edge cases the tool had no way of knowing.</p>
+
+<h3 id="2-customer-facing-help-center-articles">2. Customer-Facing Help Center Articles</h3>
+
+<p>For a client running a B2B software platform, I used Claude HowTo to produce help center content. Input was feature specs and rough user interview notes. Output was consumer-friendly how-to articles.</p>
+
+<p><strong>Result:</strong> Mixed. The quality was good for straightforward features. For anything with significant UX nuance or where the "right" answer depended on user role or account tier, the output needed heavy revision. The tool doesn't understand your product — it understands <em>how to explain things</em> — and that distinction matters more in complex software documentation than anywhere else.</p>
+
+<h3 id="3-training-material-for-non-technical-staff">3. Training Material for Non-Technical Staff</h3>
+
+<p>I used it to build a 10-module training course for retail staff learning a new inventory management system. This is where Claude HowTo genuinely shone. The audience was clearly defined, the task was concrete, and the content didn't require deep product-specific knowledge — just clear instructional scaffolding.</p>
+
+<p><strong>Result:</strong> The module structure, learning objectives, step-by-step instructions, and comprehension check questions it generated were genuinely excellent. I'd estimate this saved 20+ hours and the quality required minimal editing.</p>
+
+<h3 id="4-technical-readme-and-developer-documentation">4. Technical README and Developer Documentation</h3>
+
+<p>I threw some GitHub repo descriptions at it and asked for README files and basic developer docs. This was more of a curiosity test than a core workflow.</p>
+
+<p><strong>Result:</strong> Competent but not impressive. Developer documentation has its own conventions that Claude HowTo handles adequately but not with the nuance of a tool specifically trained on technical documentation. For quick READMEs, it works. For anything requiring architectural explanation or API reference documentation, you'll hit its ceiling fast.</p>
+
+<hr />
+
+<h2 id="feature-breakdown-what-works-and-what-doesnt">Feature Breakdown: What Works and What Doesn't</h2>
+
+<h3 id="what-works">✅ What Works</h3>
+
+<p><strong>Audience calibration is legitimately good.</strong> You can specify "explain this to a non-technical manager" vs. "explain this to a senior developer" and the tonal and vocabulary shifts are real and useful, not superficial.</p>
+
+<p><strong>Structured output formatting is consistent.</strong> The numbered steps, sub-steps, callout boxes, and warning notes are reliably formatted. If you're feeding output into a documentation system with specific formatting requirements, the predictability is valuable.</p>
+
+<p><strong>The iterative refinement loop is fast.</strong> The tool handles follow-up prompts well — "make step 4 more detailed," "add a troubleshooting section," "rewrite this for a more skeptical audience" — and the revisions are coherent rather than generating a completely new document that breaks earlier formatting.</p>
+
+<p><strong>Bulk generation is viable.</strong> I've run 15–20 article briefs through it in a single session with reasonable consistency in tone and structure. For teams managing large knowledge bases, this matters.</p>
+
+<h3 id="what-doesnt-work">❌ What Doesn't Work</h3>
+
+<p><strong>It cannot know your product.</strong> I keep coming back to this because users underestimate it. Claude HowTo generates structurally excellent documentation for things it has general knowledge about. The moment you're documenting proprietary workflows, custom tools, or highly specific internal processes, you are the subject matter expert — the tool is just organizing and formatting what you give it.</p>
+
+<p><strong>Genuinely complex procedural logic gets flattened.</strong> Decision trees with more than two or three branches tend to come out linearized in ways that confuse readers. I've had to rebuild decision logic multiple times.</p>
+
+<p><strong>No native integration with major documentation platforms.</strong> Importing output to Confluence, Notion, or Gitbook requires manual formatting adjustments. For heavy users, this is a real friction point that adds up over time.</p>
+
+<p><strong>It occasionally over-explains.</strong> Simple tasks sometimes get the full 12-step treatment when four steps would suffice. You develop a feel for when to ask for a condensed version, but new users will over-trust the initial output length.</p>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="claude-howto-vs-using-raw-claude-chatgpt-directly">Claude HowTo vs. Using Raw Claude / ChatGPT Directly</h3>
+
+<p>The most common question I get is whether you even need Claude HowTo when you can just prompt Claude or GPT-4 yourself. The honest answer: if you write good prompts and do a lot of documentation work, you probably don't <em>need</em> it. But "need" is doing a lot of work in that sentence. Claude HowTo's value is speed and consistency — the prompt engineering is already done, the output format is pre-tuned, and the iteration is faster. For occasional documentation tasks, raw Claude is fine. For teams producing documentation at scale, the efficiency gains are real.</p>
+
+<h3 id="claude-howto-vs-notion-ai">Claude HowTo vs. Notion AI</h3>
+
+<p>Notion AI is embedded in the workspace where many teams already live, which is a meaningful UX advantage. But Notion AI is a generalist assistant, not a documentation specialist. When I've run identical prompts through both, Claude HowTo consistently produces better-structured instructional content. Notion AI tends toward paragraph-form summaries where Claude HowTo defaults to actionable, numbered procedures. If your primary use case is documentation, Claude HowTo wins clearly. If you want an AI copilot across all your Notion work, Notion AI is more practical.</p>
+
+<h3 id="claude-howto-vs-scribe-tango">Claude HowTo vs. Scribe / Tango</h3>
+
+<p>Scribe and Tango are process capture tools — they watch you perform a task and auto-generate step-by-step documentation. That's a fundamentally different approach. They're better for software walkthroughs where screen capture adds value. Claude HowTo is better for anything that doesn't involve a linear clickthrough — conceptual processes, policies, multi-system workflows. They're not really competing; they're complementary. The best documentation stack I've seen uses both.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>I'm being intentionally vague here because pricing in this space shifts constantly and I don't want to give you numbers that are outdated by the time you read this. What I can tell you is this:</p>
+
+<p>The tool sits in a pricing tier that makes sense for professionals and small teams who produce documentation regularly, and feels hard to justify if you're a solo user with occasional documentation needs. The breakeven point in my experience is roughly three to four substantial documentation projects per month. Below that, you're probably better served by raw Claude API access. Above that, the time savings start to justify the cost clearly.</p>
+
+<p>There is a free tier that's functional enough to evaluate the tool properly, which I respect. Too many tools gate-keep their actual quality behind a paywall you have to commit to before you know if the thing works.</p>
+
+<hr />
+
+<h2 id="who-should-use-it-who-should-avoid-it">Who Should Use It / Who Should Avoid It</h2>
+
+<p><strong>Use it if:</strong>
+- You produce documentation regularly (more than 2-3x per week)
+- You manage a team knowledge base or help center
+- You're building internal training materials for non-technical audiences
+- Consistency and formatting predictability matter more than creative flexibility</p>
+
+<p><strong>Avoid it if:</strong>
+- You need deep product-specific documentation (it can't replace domain expertise)
+- You're a solo developer who documents once a quarter
+- You need native integrations with your doc platform right now
+- You're hoping it will replace a technical writer entirely — it won't</p>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>Claude HowTo is a genuinely useful tool that does exactly what it says it does, for a specific slice of the people who might consider buying it. It is not magic. It will not replace expertise. It will not generate accurate documentation for things it doesn't know about.</p>
+
+<p>What it will do is take the structural and organizational burden of documentation off your plate — and if you've ever stared at a blank page knowing you need to write a 20-step SOP before end of day, you understand exactly how much that's worth.</p>
+
+<p>My recommendation: use the free tier on your three most painful documentation projects. If you save meaningful time, pay for it. If you're mostly fighting to get accurate content out of it, you're in the wrong use case and no subscription will fix that.</p>
+
+<p>After six months, I'm still a paying user. That's probably the most honest endorsement I can give.</p>
+
+<hr />
+
+<p><em>Have you used Claude HowTo differently than I have? I'm curious whether developer documentation is as underwhelming for others as it was for me — drop your experience in the comments.</em></p>
+
+</body>
+</html>
