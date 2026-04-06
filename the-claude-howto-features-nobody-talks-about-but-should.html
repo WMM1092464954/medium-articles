@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Claude HowTo Features Nobody Talks About (But Should)</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="the-claude-howto-features-nobody-talks-about-but-should">The Claude HowTo Features Nobody Talks About (But Should)</h1>
+
+<p><em>A deep-dive from someone who's been living inside this tool for months</em></p>
+
+<hr />
+
+<p>There's a specific kind of frustration that comes from watching someone use a tool badly.</p>
+
+<p>I had that moment three weeks ago on a Discord server. Someone was complaining that Claude HowTo was "basically just ChatGPT with extra steps." They'd asked it to help them document an internal API process, gotten a generic numbered list back, and written the whole thing off.</p>
+
+<p>I watched them miss about six features that would have completely changed what they got. Not obscure settings buried in a changelog — features sitting right there, underused, misunderstood, or just never talked about in the reviews that show up when you search for this tool.</p>
+
+<p>That's what this article is about. Not another "here's what Claude HowTo does" overview. You've read those. This is about the functionality that actually changes your workflow once you know it exists — and an honest accounting of where it still falls short.</p>
+
+<hr />
+
+<h2 id="what-claude-howto-claims-to-do">What Claude HowTo Claims to Do</h2>
+
+<p>For anyone genuinely new here: Claude HowTo is Anthropic's workflow-oriented implementation layer built on top of Claude, specifically oriented around procedural documentation, step-by-step instruction generation, and structured knowledge transfer. The pitch is that it takes the raw capability of Claude and focuses it on a specific, high-value use case — explaining <em>how to do things</em> with precision, adaptability, and context awareness.</p>
+
+<p>The marketing emphasizes accuracy, customizable output depth, and the ability to adapt instructions to different audience skill levels. It positions itself as a professional tool, not a toy.</p>
+
+<p>That framing is mostly accurate. But it also obscures some of the more interesting things happening under the hood.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases-with-real-results">My Actual Use Cases (With Real Results)</h2>
+
+<h3 id="1-internal-process-documentation-at-scale">1. Internal Process Documentation at Scale</h3>
+
+<p>My primary use case for the first few months was rebuilding a company's internal knowledge base. We're talking roughly 200 processes that existed either in someone's head, in Confluence pages nobody had touched since 2019, or in onboarding documents that bore no resemblance to how anything actually worked.</p>
+
+<p>Claude HowTo's structured output generation cut the first-draft time on each document by about 65%. But the real win was something I didn't expect: its <strong>contextual prerequisite mapping</strong>. When I fed it a process description, it consistently surfaced dependencies I'd forgotten to mention — "before this step, the user will need X permission" or "this assumes familiarity with Y tool." That kind of anticipatory documentation is tedious to do manually. Here, it happens almost automatically.</p>
+
+<p>Result: 200 documents drafted in six weeks instead of what we'd budgeted as six months.</p>
+
+<h3 id="2-technical-tutorial-writing-for-mixed-audiences">2. Technical Tutorial Writing for Mixed Audiences</h3>
+
+<p>I write developer-facing content. The consistent nightmare is calibrating technical depth — too shallow and experienced readers feel condescended to, too deep and you lose the junior developers who actually need the guide.</p>
+
+<p>Claude HowTo has an <strong>audience-layering capability</strong> that most reviews mention in passing and then never explain. You can define a primary audience and a secondary audience, and the output will scaffold accordingly — core steps written for your primary reader, with optional depth markers that serve the secondary. The result reads like something a skilled technical writer spent real time on, not a flat document that picks one level and sticks with it awkwardly.</p>
+
+<p>I've used this to produce tiered Kubernetes setup guides, OAuth implementation walkthroughs, and internal CLI documentation. The conversion rate on these guides — measured by "did people actually complete the process without emailing support" — went up meaningfully.</p>
+
+<h3 id="3-sops-for-non-technical-teams">3. SOPs for Non-Technical Teams</h3>
+
+<p>This one surprised me most. I was skeptical that a tool oriented around documentation would do well outside technical contexts. I was wrong.</p>
+
+<p>For an operations team documenting customer escalation workflows, vendor onboarding procedures, and compliance checklists, Claude HowTo consistently produced output that felt <em>written for humans</em>, not assembled for robots. The tone calibration here is genuinely good. It understood when to use plain language and when a numbered list was the wrong format entirely — sometimes a table is clearer, sometimes a decision tree makes more sense, and the tool navigates those choices with more judgment than I expected.</p>
+
+<h3 id="4-version-aware-documentation-updates">4. Version-Aware Documentation Updates</h3>
+
+<p>This is the undertalked feature that made me want to write this article.</p>
+
+<p>When a process changes, most documentation tools require you to start over or manually redline the old version. Claude HowTo handles <strong>change-delta documentation</strong> — you feed it the old version plus a description of what changed, and it produces an updated document that preserves what's accurate, rewrites what's changed, and flags what it's uncertain about rather than silently updating it with guesses.</p>
+
+<p>For anyone maintaining living documentation — which is most of us — this is enormous. I've used it to update a 40-step infrastructure provisioning guide three times in two months as the underlying toolchain evolved. Each update took under 20 minutes.</p>
+
+<hr />
+
+<h2 id="feature-breakdown-what-works-what-doesnt">Feature Breakdown: What Works, What Doesn't</h2>
+
+<p><strong>What actually works:</strong></p>
+
+<ul>
+<li><strong>Skill-level adaptation</strong> is consistent and reliable. Ask for the same process at beginner, intermediate, and expert levels and you get meaningfully different outputs, not just vocabulary swaps.</li>
+<li><strong>Format intelligence</strong> — it doesn't default to numbered lists for everything. Context shapes structure, which is rarer than it should be.</li>
+<li><strong>Prerequisite anticipation</strong> — as mentioned above, this alone saves significant review time.</li>
+<li><strong>Tone consistency across long documents</strong> — where raw Claude can drift in voice over a 3,000-word document, HowTo holds a register more reliably.</li>
+</ul>
+
+<p><strong>What doesn't work as well as it should:</strong></p>
+
+<ul>
+<li><strong>Domain-specific accuracy at depth</strong> — for highly specialized technical procedures (certain cloud infrastructure configurations, niche developer tooling), it can confidently produce instructions that are subtly wrong. You need a human expert reviewing the output, not just editing it for style.</li>
+<li><strong>Version control integration</strong> is underdeveloped. The change-delta feature is powerful but manual. There's no native integration with GitHub, Confluence, or Notion that makes this feel seamless.</li>
+<li><strong>Multimedia guidance</strong> — if your process requires screenshots, diagrams, or video walkthroughs, you're on your own. The tool is entirely text-based, and for certain audiences that's a real limitation.</li>
+</ul>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="claude-howto-vs-notion-ai-documentation-mode">Claude HowTo vs. Notion AI (Documentation Mode)</h3>
+
+<p>Notion AI is smoother if you're already inside Notion. The integration is tighter, the formatting maps to Notion's native blocks, and it's faster for quick internal notes. But it lacks depth. For anything beyond a straightforward linear process, Notion AI produces flat output that requires substantial manual work to be useful. Claude HowTo wins on complexity and nuance, loses on friction and integration.</p>
+
+<h3 id="claude-howto-vs-document360-ai">Claude HowTo vs. Document360 AI</h3>
+
+<p>Document360 is a knowledge base platform with AI-assisted writing built in. It's genuinely good for customer-facing documentation at scale — templates, SEO considerations, analytics on what articles people actually read. If you're building a public help center, Document360 is probably the better tool. If you're doing internal documentation or content that needs to flex and adapt across contexts, Claude HowTo is more capable and more efficient.</p>
+
+<h3 id="claude-howto-vs-raw-claude-via-api-or-claudeai">Claude HowTo vs. Raw Claude (via API or Claude.ai)</h3>
+
+<p>This is the comparison most people actually care about, and the honest answer is nuanced. Raw Claude is more flexible — you can steer it anywhere. Claude HowTo is better at the specific thing it's designed for, partly because of the focused system prompting and partly because of the structured features built on top.</p>
+
+<p>If you're disciplined about prompting and know what you're doing, raw Claude can approximate most of what HowTo does. But most people aren't, and the gap in output quality is real. HowTo consistently outperforms ad-hoc Claude prompting on documentation tasks in my testing — less cleanup, fewer structural problems, more reliable depth calibration.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>The pricing sits in a tier that will feel reasonable to professionals and steep to individuals. If you're using this for business documentation at any meaningful scale, the time savings are not close — the ROI calculation is easy. If you're a solo creator producing occasional tutorials, the math is harder to justify.</p>
+
+<p>The free tier gives you enough to evaluate it seriously, which I respect. Too many tools in this category make evaluation effectively impossible without a credit card.</p>
+
+<p>My honest take: at current pricing, it earns its cost if you're producing more than 10-15 substantial documentation pieces per month. Below that, you're probably better off developing strong Claude prompts and using the API directly.</p>
+
+<hr />
+
+<h2 id="who-should-use-it-who-should-avoid-it">Who Should Use It / Who Should Avoid It</h2>
+
+<p><strong>Use it if:</strong>
+- You manage internal knowledge bases for growing teams
+- You write developer or technical documentation professionally
+- You're dealing with processes that change frequently and need version-aware updating
+- You need to produce content calibrated for multiple audience skill levels</p>
+
+<p><strong>Avoid it if:</strong>
+- Your documentation needs are occasional or light
+- You work in highly specialized technical domains where you can't verify AI-generated accuracy
+- You need multimedia documentation as a core output
+- You're already a disciplined, experienced prompter — the efficiency gain shrinks significantly</p>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>Claude HowTo is a genuinely useful tool that most people are using at about 40% of its capability. The features that make it worth the investment — audience layering, prerequisite mapping, change-delta updating, format intelligence — are either underdocumented, buried in onboarding material nobody reads, or just not talked about in the reviews that dominate search results.</p>
+
+<p>If you've tried it and walked away unimpressed, I'd bet you never used those features. If you're evaluating it for the first time, start there before you decide.</p>
+
+<p>It's not magic. The domain-accuracy limitations are real and require human review. The integration gaps are frustrating. But as a professional documentation tool for teams producing complex procedural content, it's the best option I've found — and I've spent a lot of time looking.</p>
+
+<p>The Discord person who wrote it off? I sent them this article draft. They came back two days later asking about the change-delta feature.</p>
+
+<p>That's the review.</p>
+
+</body>
+</html>
