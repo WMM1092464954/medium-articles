@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>I Used Nanocode for 30 Days — Here's My Honest Take</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="i-used-nanocode-for-30-days-heres-my-honest-take">I Used Nanocode for 30 Days — Here's My Honest Take</h1>
+
+<hr />
+
+<h2 id="the-moment-i-knew-i-had-to-write-this">The Moment I Knew I Had to Write This</h2>
+
+<p>Three weeks into using Nanocode, I was debugging a React component at 11 PM, exhausted, half-ready to give up and just ship broken code. I described the problem in plain English — something like "my useEffect is firing on every render even though I only want it to run when userId changes" — and within about eight seconds, I had not just a fix, but a three-sentence explanation of <em>why</em> my original code was wrong and what mental model I'd been missing.</p>
+
+<p>That moment wasn't magic. It was something more useful than magic: it was <em>consistent</em>. I'd had similar experiences a dozen times that month. And I'd also had moments where Nanocode completely let me down. That combination — the genuine highs and the frustrating lows — is exactly what makes this review worth writing.</p>
+
+<p>This isn't a first-look piece. This is 30 days of daily use, across real projects, with real deadlines, by someone who has also tried the obvious alternatives. Let's get into it.</p>
+
+<hr />
+
+<h2 id="what-nanocode-claims-to-do">What Nanocode Claims to Do</h2>
+
+<p>Nanocode positions itself as an AI-native coding environment built around natural language interaction. The pitch is straightforward: instead of writing code in a traditional editor and occasionally consulting an AI chatbot on the side, you work <em>through</em> the AI as a primary interface. You describe intent, the tool generates implementation, and you stay in a tight feedback loop to refine.</p>
+
+<p>It's not a plugin for VS Code. It's not a wrapper around GitHub Copilot. Nanocode is a standalone product with its own editor surface, context management system, and — importantly — its own philosophy about how developers should interact with code.</p>
+
+<p>The tagline leans heavily on "write less, build more," which is either inspiring or annoying depending on your mood. After 30 days, I'd say it's both.</p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-prototyping-a-full-stack-feature-end-to-end">1. Prototyping a Full-Stack Feature End-to-End</h3>
+
+<p>I was building a simple admin dashboard for a client — user table, filtering, pagination, basic CRUD. Normally this is three to four hours of work: boilerplate, state management, API calls, error handling. With Nanocode, I described the feature in roughly the way I'd explain it to a junior developer.</p>
+
+<p><strong>Result:</strong> The initial scaffold came in under four minutes. It wasn't production-ready — the error states were generic and the types were loose — but it was <em>directionally correct</em>. I spent about 90 minutes refining instead of four hours building from scratch. That's a real win.</p>
+
+<h3 id="2-refactoring-legacy-code">2. Refactoring Legacy Code</h3>
+
+<p>This is where things got more complicated. I fed Nanocode a 400-line file from an older codebase — messy, inconsistently typed, with some creative variable naming choices I won't repeat here.</p>
+
+<p><strong>Result:</strong> The refactoring suggestions were solid for the top-level structure, but Nanocode struggled with implicit business logic buried in the code. It cleaned up the syntax beautifully while occasionally breaking the <em>intent</em>. I caught every issue in review, but this means you cannot use Nanocode for legacy refactoring without deep manual verification. Treat it as a first draft, not a finished product.</p>
+
+<h3 id="3-writing-tests">3. Writing Tests</h3>
+
+<p>I genuinely did not expect this to be a standout use case, but it was. Describing "write unit tests for this authentication service, cover edge cases for expired tokens and missing headers" produced test suites that were, honestly, better than what I'd have written under time pressure. Coverage was thoughtful, mocks were appropriately structured.</p>
+
+<p><strong>Result:</strong> Strong. This might be Nanocode's single best use case for time-pressed developers.</p>
+
+<h3 id="4-documentation-generation">4. Documentation Generation</h3>
+
+<p>I used Nanocode to generate JSDoc comments and README sections for a small open-source utility library. The output was clean and accurate for simple functions. Complex generics? Less so. The descriptions were technically correct but occasionally missed the <em>why</em> behind design decisions — which makes sense, because that context lived in my head, not in the code.</p>
+
+<p><strong>Result:</strong> Good for 80% of documentation tasks. The remaining 20% still needs a human who understands architectural intent.</p>
+
+<hr />
+
+<h2 id="feature-breakdown-what-works-what-doesnt">Feature Breakdown: What Works, What Doesn't</h2>
+
+<h3 id="what-works">What Works</h3>
+
+<p><strong>Context window management</strong> is genuinely impressive. Nanocode maintains conversational memory across a session better than most AI coding tools I've used. You can say "remember that function we wrote earlier" and it usually actually does. This sounds basic. It isn't, in practice.</p>
+
+<p><strong>Inline explanations</strong> are consistently valuable. Every code generation comes with optional explanatory comments you can toggle. Unlike some tools that produce condescending over-explanation, Nanocode calibrates this reasonably well for intermediate-to-senior developers.</p>
+
+<p><strong>Multi-file awareness</strong> works when you set it up correctly. If you explicitly tell Nanocode which files are in scope, cross-file refactoring is coherent. The catch: you have to be deliberate about this setup. It doesn't infer project structure automatically the way some competing tools do.</p>
+
+<h3 id="what-doesnt-work">What Doesn't Work</h3>
+
+<p><strong>Real-time syntax awareness</strong> is weaker than Copilot-style inline completion tools. If you're a developer who thinks in keystrokes and likes completion at the character level, Nanocode will feel slow and disconnected. It's built for description-to-generation, not keystroke-to-keystroke assistance.</p>
+
+<p><strong>Framework-specific patterns</strong> can be hit or miss. React, Node, and Python work excellently. More niche frameworks — I tested it with some Svelte and Deno work — produced outputs that were syntactically plausible but occasionally idiomatic to the wrong version or missing framework-specific best practices.</p>
+
+<p><strong>Error diagnosis from runtime logs</strong> is undercooked. Pasting a stack trace and asking for help works, but it's not significantly better than asking a well-prompted ChatGPT. This feels like an area where Nanocode could differentiate itself and hasn't yet.</p>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="nanocode-vs-github-copilot">Nanocode vs. GitHub Copilot</h3>
+
+<p>Copilot wins on <em>integration</em>. If you live in VS Code, Copilot is invisible in the best way — it surfaces suggestions without interrupting your flow. Nanocode requires context-switching to a different environment, which has a real cognitive cost.</p>
+
+<p>But Nanocode wins on <em>comprehension depth</em>. When you need to reason about a feature, not just complete a line, Nanocode's conversational interface produces more coherent, holistic outputs. Copilot is a fast autocompleter. Nanocode is closer to a thinking partner.</p>
+
+<p><strong>Verdict:</strong> Use Copilot for daily coding velocity. Use Nanocode for design-level thinking and feature prototyping.</p>
+
+<h3 id="nanocode-vs-cursor">Nanocode vs. Cursor</h3>
+
+<p>This comparison is the most relevant for developers seriously evaluating AI-native editors. Cursor has better IDE surface area — it feels more like a real code editor that happens to have AI, while Nanocode still feels like an AI interface that happens to have an editor.</p>
+
+<p>However, Nanocode's context management is more reliable across long sessions. Cursor has a habit of "forgetting" earlier context in complex conversations. For 30-minute sprints, Cursor; for sustained multi-hour sessions on a single feature, Nanocode holds up better.</p>
+
+<p><strong>Verdict:</strong> Cursor is the safer mainstream choice. Nanocode is worth it if you do long, complex feature sessions regularly.</p>
+
+<h3 id="nanocode-vs-replit-ai">Nanocode vs. Replit AI</h3>
+
+<p>Replit AI is optimized for beginners and quick deployment. Nanocode is optimized for developers who know what they want and need help executing it faster. These aren't really competing for the same user, and I'd say Replit wins its target market clearly.</p>
+
+<p><strong>Verdict:</strong> If you're comparing these two, you're probably not Nanocode's target user.</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p>Nanocode's pricing sits in the mid-tier range for AI developer tools — roughly comparable to Cursor's subscription, less than a full GitHub Copilot Enterprise seat, more than a basic ChatGPT Plus subscription used informally for coding help.</p>
+
+<p>Is it worth it? For a developer billing at $80–150/hour, saving even three to four hours per week more than justifies the cost. My experience suggests you can realistically save that much <em>if</em> your work involves significant amounts of prototyping, documentation, or test writing.</p>
+
+<p>If you're primarily doing maintenance work on existing codebases — bug fixes, small feature additions to familiar systems — the ROI is murkier. You'll use it, it'll be useful, but you won't feel the productivity multiplier as acutely.</p>
+
+<p>The free tier is functional enough to evaluate honestly, which I respect. You're not forced into a purchase before you understand what you're buying.</p>
+
+<hr />
+
+<h2 id="who-should-use-it-who-should-avoid-it">Who Should Use It / Who Should Avoid It</h2>
+
+<h3 id="use-nanocode-if">Use Nanocode if:</h3>
+
+<ul>
+<li>You regularly prototype new features or products from scratch</li>
+<li>You write a lot of tests and documentation</li>
+<li>You do client work where time-to-first-draft matters commercially</li>
+<li>You prefer describing what you want to typing out boilerplate</li>
+<li>You work with mainstream stacks (React, Node, Python, TypeScript)</li>
+</ul>
+
+<h3 id="avoid-nanocode-if">Avoid Nanocode if:</h3>
+
+<ul>
+<li>Your work is primarily incremental changes to existing codebases</li>
+<li>You need real-time keystroke-level completion built into your current editor</li>
+<li>You work heavily with niche frameworks or languages</li>
+<li>You're a beginner who needs hand-holding through execution, not just generation</li>
+<li>You're unwilling to manually verify AI output — because you must, every time</li>
+</ul>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>Nanocode is a genuinely good tool that is not yet a great tool. The ceiling is high — when it works, it works in ways that feel meaningfully different from just "AI autocomplete." The floor is real — there are workflows where it adds friction instead of removing it.</p>
+
+<p>After 30 days, I'm still using it. Specifically, I've carved out the use cases where it earns its place: new feature prototyping, test generation, documentation. I've also stopped expecting it to be something it isn't — a seamless, invisible coding accelerator integrated into my existing editor.</p>
+
+<p>If you go in with calibrated expectations and a workflow that plays to its strengths, Nanocode is worth the subscription. If you go in expecting it to replace your editor and think for you, you'll be frustrated and canceled within two weeks.</p>
+
+<p>The 30-day version of me? I'd tell you to run the free trial on your next two feature builds. You'll know within a week whether the way it thinks matches the way you work.</p>
+
+<p>That's the most honest recommendation I can give.</p>
+
+</body>
+</html>
