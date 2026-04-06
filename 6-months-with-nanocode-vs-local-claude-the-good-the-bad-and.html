@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>6 Months With Nanocode vs Local Claude: The Good, The Bad, and The Ugly</title>
+<style>
+  body { max-width: 720px; margin: 40px auto; padding: 0 20px; font-family: Georgia, serif; font-size: 18px; line-height: 1.7; color: #333; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  h2 { font-size: 24px; margin-top: 32px; }
+  h3 { font-size: 20px; }
+  blockquote { border-left: 3px solid #ccc; padding-left: 16px; color: #555; font-style: italic; }
+  code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 15px; }
+  pre code { display: block; padding: 16px; overflow-x: auto; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<h1 id="6-months-with-nanocode-vs-local-claude-the-good-the-bad-and-the-ugly">6 Months With Nanocode vs Local Claude: The Good, The Bad, and The Ugly</h1>
+
+<p><em>A developer's honest account of running both setups in production — so you don't have to make the same expensive mistakes I did.</em></p>
+
+<hr />
+
+<h2 id="the-hook">The Hook</h2>
+
+<p>Six months ago, I made a bet that cost me three weekends and roughly $400 in API credits.</p>
+
+<p>I was deep in a freelance project — a mid-sized SaaS dashboard with a messy legacy codebase — and I needed an AI coding assistant that could handle real context: sprawling file trees, inconsistent naming conventions, and a product manager who changed requirements on Tuesdays. I'd been using cloud Claude through Anthropic's API, but the costs were stacking up fast, and I'd heard enough noise about Nanocode to give it a serious look.</p>
+
+<p>So I ran both setups in parallel. Same projects. Same prompts. Same deadline pressure.</p>
+
+<p>What I found was more nuanced than any Reddit thread or YouTube comparison had prepared me for. This review is what I wish I'd read before I started.</p>
+
+<hr />
+
+<h2 id="what-each-tool-claims-to-do">What Each Tool Claims to Do</h2>
+
+<p><strong>Nanocode</strong> is a locally-focused AI coding environment that routes queries through compressed, task-specialized model layers. The pitch is simple: faster iteration, lower cost, and enough offline capability to work on a plane or in a client's basement with spotty Wi-Fi. It positions itself as the pragmatic developer's tool — less about raw intelligence, more about speed and workflow integration.</p>
+
+<p><strong>Local Claude</strong> (running Claude models via tools like Ollama, LM Studio, or custom inference setups with quantized Claude-compatible weights, or accessed via a self-hosted API proxy with rate control) is a different beast entirely. You're essentially capturing Anthropic's reasoning quality and trying to run it at sustainable cost, either on your own hardware or through a controlled API budget. The promise is premium reasoning without the unpredictable billing.</p>
+
+<p>Neither tool is doing something entirely new. Both are solving the same problem: <em>how do I get AI-assisted coding that doesn't bankrupt me or depend entirely on someone else's servers?</em></p>
+
+<hr />
+
+<h2 id="my-actual-use-cases">My Actual Use Cases</h2>
+
+<h3 id="1-legacy-code-refactoring-10000-line-php-monolith">1. Legacy Code Refactoring (10,000+ Line PHP Monolith)</h3>
+
+<p>This was the acid test. The codebase had functions calling functions that called deprecated functions. Variable names were creative in the worst way.</p>
+
+<p><strong>Nanocode</strong> handled file-by-file refactoring suggestions admirably. It was fast — genuinely fast — and the inline suggestions felt contextually aware within a single file. But the moment I needed it to reason across five files simultaneously, things got shaky. It would suggest a refactor in <code>UserController.php</code> that broke an assumption baked into <code>AuthMiddleware.php</code> three directories away.</p>
+
+<p><strong>Local Claude</strong> (running through a controlled API proxy with GPT-4-class context windows) was slower by 40-60% on average, but it caught cross-file dependency issues that Nanocode missed entirely. For legacy work specifically, that reasoning depth paid for itself in prevented bugs.</p>
+
+<p><strong>Winner: Local Claude</strong>, but only because this task demanded cross-file coherence.</p>
+
+<h3 id="2-rapid-prototyping-new-features-from-scratch">2. Rapid Prototyping — New Features from Scratch</h3>
+
+<p>Building a new webhook handler from a spec doc? This is where Nanocode shines.</p>
+
+<p>The scaffolding speed is genuinely impressive. I'd paste a requirement, get a working skeleton in seconds, and iterate from there. For greenfield work with clear requirements, the speed advantage over Local Claude was meaningful — especially when I was billing hourly and a client was watching the clock.</p>
+
+<p><strong>Winner: Nanocode</strong>, and it's not particularly close for this use case.</p>
+
+<h3 id="3-explaining-unfamiliar-code-to-onboard-a-junior-developer">3. Explaining Unfamiliar Code to Onboard a Junior Developer</h3>
+
+<p>I used both tools to generate onboarding documentation and inline explanations for a junior I was mentoring. Same codebase, same sections, same prompt: <em>"Explain this to someone who knows Python but not this system."</em></p>
+
+<p>Nanocode produced technically accurate explanations that were slightly terse. Useful, but requiring editing before I'd hand them to a junior.</p>
+
+<p>Local Claude's explanations were conversational, layered, and contained analogies that made the mentoring sessions significantly smoother. It seemed to model <em>the reader</em> more effectively than the code itself.</p>
+
+<p><strong>Winner: Local Claude</strong> — the reasoning about audience is noticeably superior.</p>
+
+<h3 id="4-debugging-production-incidents-under-time-pressure">4. Debugging Production Incidents Under Time Pressure</h3>
+
+<p>At 11pm on a Thursday, a webhook was silently dropping payloads. I had logs, a stack trace, and a rising panic level.</p>
+
+<p>Nanocode gave me three plausible hypotheses in under 30 seconds. One of them was right. I fixed it in 20 minutes.</p>
+
+<p>Local Claude, at the same moment, gave me a more thorough analysis — but the latency during that session (I suspect API throttling on my proxy setup) meant I was staring at a loading indicator when I should have been typing a fix.</p>
+
+<p><strong>Winner: Nanocode</strong> — in incident response, <em>fast and mostly right</em> beats <em>slow and perfect</em> every single time.</p>
+
+<hr />
+
+<h2 id="feature-breakdown">Feature Breakdown</h2>
+
+<h3 id="what-works-in-nanocode">What Works in Nanocode</h3>
+
+<ul>
+<li><strong>Inline suggestion speed</strong> — Consistently the fastest I've tested at this price point</li>
+<li><strong>Low-friction setup</strong> — Had it running in under 15 minutes</li>
+<li><strong>Offline resilience</strong> — Genuinely functional on a flight to a client site, which matters more than it sounds</li>
+<li><strong>Workflow integration</strong> — VS Code extension is polished and largely stays out of your way</li>
+</ul>
+
+<h3 id="what-doesnt-work-in-nanocode">What Doesn't Work in Nanocode</h3>
+
+<ul>
+<li><strong>Multi-file reasoning</strong> — Real limitation, not marketing spin. It feels the walls of its context window</li>
+<li><strong>Nuanced explanation tasks</strong> — Technically correct but lacks depth when the <em>why</em> matters more than the <em>what</em></li>
+<li><strong>Long conversation threads</strong> — Context degradation sets in around message 15-20 in a complex session</li>
+</ul>
+
+<h3 id="what-works-with-local-claude">What Works with Local Claude</h3>
+
+<ul>
+<li><strong>Deep reasoning chains</strong> — Follows logic through complex, multi-step problems without losing the thread</li>
+<li><strong>Audience-aware output</strong> — Noticeably better at calibrating explanation depth</li>
+<li><strong>Cross-file coherence</strong> — Handles architectural thinking that Nanocode stumbles on</li>
+</ul>
+
+<h3 id="what-doesnt-work-with-local-claude">What Doesn't Work with Local Claude</h3>
+
+<ul>
+<li><strong>Latency</strong> — Even well-optimized setups are slower. You feel it in rapid iteration cycles</li>
+<li><strong>Setup complexity</strong> — Getting a reliable, cost-controlled local Claude environment running is a real project, not an afternoon</li>
+<li><strong>Cost predictability</strong> — If you're API proxying, one heavy session can spike your bill in ways Nanocode's flat model won't</li>
+</ul>
+
+<hr />
+
+<h2 id="vs-the-competition">Vs. The Competition</h2>
+
+<h3 id="nanocode-vs-github-copilot">Nanocode vs. GitHub Copilot</h3>
+
+<p>Copilot has distribution and IDE integration that Nanocode is still catching up to. But Copilot's suggestions can feel generic in ways Nanocode doesn't — Nanocode seems more willing to work with your actual patterns rather than defaulting to textbook implementations. If you're already deep in the GitHub ecosystem, Copilot wins on convenience. If you're not, Nanocode is the better technical bet.</p>
+
+<h3 id="local-claude-vs-running-gpt-4o-locally">Local Claude vs. Running GPT-4o Locally</h3>
+
+<p>This is almost an unfair comparison because the setup complexity of truly local large model inference is brutal unless you have serious GPU hardware. Most "Local Claude" setups are really "API Claude with cost controls." GPT-4o via similar proxy arrangements has more community tooling, but Claude's reasoning style is measurably better for code explanation tasks in my testing. If you're building the infrastructure anyway, route it toward Claude.</p>
+
+<h3 id="both-vs-cursor">Both vs. Cursor</h3>
+
+<p>Cursor is the elephant in the room. It's eating market share from both categories because it layers Claude-quality reasoning over a fast, polished IDE experience. If you're not strongly committed to either Nanocode or Local Claude workflows, you should evaluate Cursor seriously before committing. The main reasons to avoid Cursor: you need offline capability (Nanocode wins), or you have strict data residency requirements (Local Claude wins with proper setup).</p>
+
+<hr />
+
+<h2 id="pricing-reality-check">Pricing Reality Check</h2>
+
+<p><strong>Nanocode</strong> runs on a subscription model that's predictable and, for heavy users, genuinely cost-efficient compared to raw API usage. If you're doing 6+ hours of coding assistance daily, the math works in its favor within the first month.</p>
+
+<p><strong>Local Claude</strong> costs depend enormously on your setup. A well-configured API proxy with budget caps can be cheaper than Nanocode for moderate users. But the <em>hidden cost</em> is your time: the setup, maintenance, debugging the infrastructure itself. I spent about 8-10 hours getting a reliable Local Claude environment running properly. That's real money if you're billing your time.</p>
+
+<p>The honest summary: Nanocode is cheaper in time, potentially more expensive in money over a long horizon. Local Claude is cheaper in money if you're disciplined, but costs you setup time most developers would rather spend coding.</p>
+
+<hr />
+
+<h2 id="who-should-use-each">Who Should Use Each</h2>
+
+<h3 id="use-nanocode-if">Use Nanocode if:</h3>
+
+<ul>
+<li>You prototype frequently and speed is your primary bottleneck</li>
+<li>You work offline or in unreliable connectivity environments</li>
+<li>You want a coding assistant that's running within 20 minutes of reading this</li>
+<li>Your projects are mostly self-contained rather than deeply interconnected codebases</li>
+</ul>
+
+<h3 id="use-local-claude-if">Use Local Claude if:</h3>
+
+<ul>
+<li>You're working on architecturally complex systems where reasoning depth matters</li>
+<li>You're mentoring, documenting, or doing work where explanation quality is critical</li>
+<li>You have the technical willingness to maintain your own infrastructure</li>
+<li>You're on a team with data sensitivity requirements that cloud tools can't satisfy</li>
+</ul>
+
+<h3 id="avoid-nanocode-if">Avoid Nanocode if:</h3>
+
+<ul>
+<li>Cross-file architectural reasoning is your daily bread</li>
+</ul>
+
+<h3 id="avoid-local-claude-if">Avoid Local Claude if:</h3>
+
+<ul>
+<li>You don't have 8-10 hours to invest in setup and troubleshooting</li>
+</ul>
+
+<hr />
+
+<h2 id="final-verdict">Final Verdict</h2>
+
+<p>After six months, I use both — but not interchangeably.</p>
+
+<p>Nanocode lives in my VS Code for day-to-day feature work, rapid prototyping, and anything that needs an answer in the next 30 seconds. It earned that position because it's fast, reliable, and genuinely useful without requiring me to think about it.</p>
+
+<p>Local Claude is what I open when the problem is hard, the stakes are real, and I need the AI to actually <em>understand</em> what I'm building rather than pattern-match against similar-looking code.</p>
+
+<p>If you're forced to pick one: <strong>new to AI coding tools, or working on greenfield projects — start with Nanocode.</strong> The onramp is real and the speed will convert you quickly.</p>
+
+<p><strong>Working on complex legacy systems, doing technical writing, or willing to invest setup time for deeper reasoning — Local Claude is worth the friction.</strong></p>
+
+<p>The worst outcome is treating them as direct substitutes and being disappointed when either one underperforms at tasks it was never designed for. They're solving adjacent problems. The developers who get the most from both are the ones who stopped looking for a single tool to rule them all.</p>
+
+<hr />
+
+<p><em>Have a different experience after running either tool in production? I'd genuinely like to hear it — drop it in the comments.</em></p>
+
+</body>
+</html>
